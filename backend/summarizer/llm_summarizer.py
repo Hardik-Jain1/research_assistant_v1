@@ -28,7 +28,7 @@ def summarize_arxiv_papers(
     top_p=0.5,
 ):
     prompts_dir = config.get('PROMPTS_DIR', 'prompts/') # Default if not in config
-    model_name = config.get('LITELLM_MODEL_SUMMARIZE', 'gemini/gemini-1.5-flash-latest')
+    model_name = config.get('LITELLM_MODEL_SUMMARIZE', 'gemini/gemini-2.0-flash')
 
     with open(os.path.join(prompts_dir, "sys_role_paper_sum.txt"), "r", encoding="utf-8") as f:
         system_prompt = f.read()
@@ -103,7 +103,7 @@ def synthesize_insights_from_summaries(
     top_p=0.5,
 ):
     prompts_dir = config.get('PROMPTS_DIR', 'prompts/')
-    model_name = config.get('LITELLM_MODEL_SUMMARIZE', 'gemini/gemini-1.5-flash-latest') # Or a different model for synthesis
+    model_name = config.get('LITELLM_MODEL_SUMMARIZE', 'gemini/gemini-2.0-flash') # Or a different model for synthesis
 
     with open(os.path.join(prompts_dir, "sys_role_final_response.txt"), "r", encoding="utf-8") as f:
         system_prompt = f.read()

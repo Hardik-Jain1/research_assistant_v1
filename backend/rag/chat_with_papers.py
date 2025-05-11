@@ -11,7 +11,7 @@ def chat_with_papers(
     config, # Pass Flask app.config or relevant parts
     llm_completion_func, # Pass the completion function
     chat_history: list = None,
-    history_window: int = 3, # Consider making this configurable
+    history_window: int = 10, # Consider making this configurable
     # model_name will come from config
     max_tokens: int = 4096, # Default, can be overridden by config
     temperature: float = 0.0,
@@ -21,7 +21,7 @@ def chat_with_papers(
     # llm_context = format_llm_context(context_dict) # Context is now passed directly
 
     prompts_dir = config.get('PROMPTS_DIR', 'prompts/')
-    model_name = config.get('LITELLM_MODEL_CHAT', 'gemini/gemini-1.5-flash-latest')
+    model_name = config.get('LITELLM_MODEL_CHAT', 'gemini/gemini-2.0-flash')
     # max_tokens_chat = config.get('MAX_TOKENS_CHAT', max_tokens) # Allow override from config
 
     with open(os.path.join(prompts_dir, "sys_role_chat.txt"), "r", encoding="utf-8") as f:

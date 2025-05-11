@@ -30,7 +30,7 @@ def process_paper_background(app_context, paper_metadata_id):
                 downloaded_paths = DownloadService.download_paper_pdfs(pdf_info)
                 if downloaded_paths:
                     paper.local_pdf_path = downloaded_paths[0]
-                    paper.downloaded_at = datetime.datetime.utcnow()
+                    paper.downloaded_at = datetime.datetime.now(datetime.timezone.utc)
                     db.session.commit()
                     current_app.logger.info(f"PDF downloaded for {paper.arxiv_id} to {paper.local_pdf_path}")
                 else:
@@ -42,7 +42,7 @@ def process_paper_background(app_context, paper_metadata_id):
             # 2. Extract Text
             raw_text = ProcessingService.extract_text(paper.local_pdf_path)
             if raw_text:
-                paper.text_extracted_at = datetime.datetime.utcnow()
+                paper.text_extracted_at = datetime.datetime.now(datetime.timezone.utc)
                 db.session.commit()
                 current_app.logger.info(f"Text extracted for {paper.arxiv_id}")
             else:
@@ -53,7 +53,7 @@ def process_paper_background(app_context, paper_metadata_id):
 
             # 3. Clean Text
             cleaned_text = ProcessingService.clean_text(raw_text)
-            paper.cleaned_text_at = datetime.datetime.utcnow()
+            paper.cleaned_text_at = datetime.datetime.now(datetime.timezone.utc)
             # Not storing full cleaned_text in DB to avoid large data, it's used for indexing
             db.session.commit()
             current_app.logger.info(f"Text cleaned for {paper.arxiv_id}")
@@ -66,7 +66,7 @@ def process_paper_background(app_context, paper_metadata_id):
             )
             if collection_name:
                 paper.qdrant_collection_name = collection_name
-                paper.indexed_at = datetime.datetime.utcnow()
+                paper.indexed_at = datetime.datetime.now(datetime.timezone.utc)
                 db.session.commit()
                 current_app.logger.info(f"Paper {paper.arxiv_id} indexed into Qdrant collection: {collection_name}")
             else:
@@ -119,7 +119,7 @@ def search_and_summarize_papers():
                 paper.published_date = res['published']
                 paper.pdf_url = res['pdf_url']
                 paper.entry_id = res['entry_id']
-                paper.updated_at = datetime.datetime.utcnow()
+                paper.updated_at = datetime.datetime.now(datetime.timezone.utc)
             db.session.flush() # Assigns ID to 'paper' if new, before commit
 
             papers_for_summary.append({

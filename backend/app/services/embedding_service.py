@@ -25,7 +25,7 @@ def get_embedding(texts: list[str], model_type: str = "litellm"): # or "sbert"
         return []
 
     if model_type == "litellm":
-        model_name = current_app.config.get('EMBEDDING_MODEL_NAME_LITELLM', 'text-embedding-ada-002') # Example, configure as needed
+        model_name = current_app.config.get('EMBEDDING_MODEL_NAME_LITELLM', 'gemini/text-embedding-004') # Example, configure as needed
         try:
             current_app.logger.info(f"Generating embeddings for {len(texts)} texts using LiteLLM model: {model_name}")
             response = litellm_embedding(model=model_name, input=texts)

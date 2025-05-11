@@ -91,7 +91,7 @@ def chat_with_selected_papers():
             # token_usage_json=rag_response_data.get('token_usage') # If storing token usage
         )
         db.session.add_all([user_message, assistant_message])
-        chat_session.updated_at = datetime.datetime.utcnow() # Update session timestamp
+        chat_session.updated_at = datetime.datetime.now(datetime.timezone.utc) # Update session timestamp
         db.session.commit()
 
         return jsonify({

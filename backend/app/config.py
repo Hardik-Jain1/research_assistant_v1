@@ -24,10 +24,10 @@ class Config:
     QDRANT_API_KEY = os.environ.get('QDRANT_API_KEY') # Optional
 
     # LiteLLM model configuration
-    LITELLM_MODEL_SUMMARIZE = os.environ.get('LITELLM_MODEL_SUMMARIZE', 'gemini/gemini-1.5-flash-latest')
-    LITELLM_MODEL_CHAT = os.environ.get('LITELLM_MODEL_CHAT', 'gemini/gemini-1.5-flash-latest')
+    LITELLM_MODEL_SUMMARIZE = os.environ.get('LITELLM_MODEL_SUMMARIZE', 'gemini/gemini-2.0-flash')
+    LITELLM_MODEL_CHAT = os.environ.get('LITELLM_MODEL_CHAT', 'gemini/gemini-2.0-flash')
     # Embedding model (can be specified for LiteLLM or a separate sentence-transformer)
-    EMBEDDING_MODEL_NAME = os.environ.get('EMBEDDING_MODEL_NAME', 'sentence-transformers/all-MiniLM-L6-v2') # Example
+    EMBEDDING_MODEL_NAME = os.environ.get('EMBEDDING_MODEL_NAME', 'gemini/text-embedding-004') # Example
 
     # Directories
     PAPER_SAVE_DIR = os.environ.get('PAPER_SAVE_DIR') or os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'data', 'papers')
