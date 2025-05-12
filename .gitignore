@@ -1,1 +1,9 @@
-/backend/.env
+backend/.env
+backend/instance/
+backend/data/papers/
+backend/*.pyc
+backend/__pycache__/
+backend/.env
+backend/*.log
+backend/logs/*.log
+**/__pycache__/

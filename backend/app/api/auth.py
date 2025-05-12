@@ -43,7 +43,7 @@ class LoginAPI(MethodView):
         user = User.query.filter((User.username == username_or_email) | (User.email == username_or_email)).first()
 
         if user and user.check_password(password):
-            access_token = create_access_token(identity=user.id)
+            access_token = create_access_token(identity=str(user.id))
             # refresh_token = create_refresh_token(identity=user.id) # If using refresh tokens
             
             return jsonify(
@@ -68,7 +68,7 @@ class ProtectedAPI(MethodView):
     decorators = [jwt_required()]
 
     def get(self):
-        current_user_id = get_jwt_identity()
+        current_user_id = int(get_jwt_identity())
         user = User.query.get(current_user_id)
         if not user:
              return jsonify({"msg": "User not found"}), 404

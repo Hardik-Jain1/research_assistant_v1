@@ -13,7 +13,7 @@ rag_bp = Blueprint('rag_bp', __name__)
 @rag_bp.route('/chat', methods=['POST'])
 @jwt_required()
 def chat_with_selected_papers():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     data = request.get_json()
 
     user_query = data.get('query')
@@ -109,7 +109,7 @@ def chat_with_selected_papers():
 @rag_bp.route('/sessions', methods=['GET'])
 @jwt_required()
 def list_chat_sessions():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     user = db.session.get(User, current_user_id)
     if not user:
         return jsonify({"msg": "User not found"}), 401
@@ -128,7 +128,7 @@ def list_chat_sessions():
 @rag_bp.route('/sessions/<int:session_id>/messages', methods=['GET'])
 @jwt_required()
 def get_chat_session_messages(session_id):
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     chat_session = db.session.get(ChatSession, session_id)
 
     if not chat_session or chat_session.user_id != current_user_id:
