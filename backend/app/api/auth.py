@@ -3,7 +3,7 @@ from flask import request, jsonify, current_app
 from flask.views import MethodView
 from app.extensions import db
 from app.models.user import User
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token, set_access_cookies, set_refresh_cookies
 import datetime
 
 # Use a Blueprint for auth routes
@@ -44,11 +44,21 @@ class LoginAPI(MethodView):
 
         if user and user.check_password(password):
             access_token = create_access_token(identity=str(user.id))
-            # refresh_token = create_refresh_token(identity=user.id) # If using refresh tokens
+            refresh_token = create_refresh_token(identity=str(user.id)) # If using refresh tokens
+
+            response = jsonify({
+                        "msg": "Login successful",
+                        "user_id": user.id,
+                        "username": user.username
+                    })
+
+            # Set secure HttpOnly cookies
+            set_access_cookies(response, access_token)
+            set_refresh_cookies(response, refresh_token)
             
             return jsonify(
                 access_token=access_token,
-                # refresh_token=refresh_token,
+                refresh_token=refresh_token,
                 user_id=user.id,
                 username=user.username
             ), 200
