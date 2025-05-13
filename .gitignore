@@ -6,4 +6,6 @@ backend/__pycache__/
 backend/.env
 backend/*.log
 backend/logs/*.log
+backend/res_ass_env
+backend/migrations
 **/__pycache__/
