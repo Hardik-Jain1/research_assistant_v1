@@ -82,7 +82,7 @@ def process_paper_background(app_context, paper_metadata_id):
 @papers_bp.route('/search', methods=['POST'])
 @jwt_required()
 def search_and_summarize_papers():
-    current_user_id = get_jwt_identity()
+    current_user_id = int(get_jwt_identity())
     data = request.get_json()
     query = data.get('query')
 

@@ -74,10 +74,22 @@ class ProtectedAPI(MethodView):
              return jsonify({"msg": "User not found"}), 404
         return jsonify(logged_in_as=user.username, user_id=user.id), 200
 
+class LogoutAPI(MethodView):
+    decorators = [jwt_required()] # User must be logged in to log out
+
+    def post(self):
+        # For a simple logout, the server doesn't do much beyond acknowledging.
+        # The client is responsible for discarding the JWT.
+        # If implementing a token blocklist (denylist), you would add the token's JTI here.
+        current_user_id = int(get_jwt_identity())
+        # current_app.logger.info(f"User {current_user_id} logged out.") # Example log
+
+        return jsonify({"msg": "Logout successful. Please discard your token."}), 200
 
 # Registering the views with the blueprint
 auth_bp.add_url_rule('/register', view_func=RegisterAPI.as_view('register_api'), methods=['POST'])
 auth_bp.add_url_rule('/login', view_func=LoginAPI.as_view('login_api'), methods=['POST'])
+auth_bp.add_url_rule('/logout', view_func=LogoutAPI.as_view('logout_api'), methods=['POST']) # Add this line
 # auth_bp.add_url_rule('/refresh', view_func=TokenRefreshAPI.as_view('refresh_api'), methods=['POST'])
 auth_bp.add_url_rule('/protected', view_func=ProtectedAPI.as_view('protected_api'), methods=['GET'])
 
