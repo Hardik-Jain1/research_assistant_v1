@@ -250,4 +250,4 @@ All endpoints are prefixed with `/api`. For example, `/auth/register` becomes `/
 
 -----
 
-This list should cover all the interactions your frontend will need with the backend.
+This list should cover all the interactions your frontend will need with the backend. 
