@@ -38,7 +38,8 @@ def create_app(config_name='dev'):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
-    cors.init_app(app, resources={r"/api/*": {"origins": "*"}}) # Adjust origins for production
+    # cors.init_app(app, resources={r"/api/*": {"origins": "*"}}) # Adjust origins for production
+    cors.init_app(app, supports_credentials=True, origins="*")
 
     # --- Logging Configuration ---
     if True: #not app.debug and not app.testing: # Only enable file logging when not in debug or testing

@@ -155,6 +155,7 @@ The backend exposes RESTful APIs under the `/api` prefix. Key groups include:
 Refer to the API implementation in `app/api/` for detailed request/response formats.
 
 ## Project Structure
+```
 backend/
 ├── app/                     # Main application package
 │   ├── init.py          # Application factory, logging setup
@@ -180,3 +181,4 @@ backend/
 ├── requirements.txt         # Python dependencies
 ├── run.py                   # Script to run the Flask application
 └── README.md                # This file
+```
