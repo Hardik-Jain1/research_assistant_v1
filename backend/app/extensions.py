@@ -7,4 +7,4 @@ from flask_cors import CORS
 db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
-cors = CORS(origins="*", supports_credentials=True)
+cors = CORS(origins="*", supports_credentials=True, expose_headers=["Authorization"])
